@@ -1,0 +1,34 @@
+name: "Build and Test"
+run-name: Build triggered by ${{ github.actor }} on ${{ github.ref_name }}
+
+# where to run the workflow (file)
+on:
+  push:
+
+jobs:
+  build:
+    name: "Build Stage"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Compile with javac
+        run: javac -d out $(find src -name "*.java")
+
+  test:
+    name: "Testing"
+    runs-on: ubuntu-latest
+    needs: build # needs tells github actions - this job should wait for this another job to finish before running
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run tests (placeholder)
+        run: echo "Tests not implemented yet :) sorry..."
