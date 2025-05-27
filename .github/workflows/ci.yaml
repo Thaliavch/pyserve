@@ -19,6 +19,15 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
+      - name: Create lib directory and download jars
+        run: |
+          mkdir -p lib
+          wget https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/4.31.0/protobuf-java-4.31.0.jar -P lib
+          wget https://repo1.maven.org/maven2/io/grpc/grpc-protobuf/1.60.0/grpc-protobuf-1.60.0.jar -P lib
+          wget https://repo1.maven.org/maven2/io/grpc/grpc-stub/1.60.0/grpc-stub-1.60.0.jar -P lib
+          wget https://repo1.maven.org/maven2/io/grpc/grpc-core/1.60.0/grpc-core-1.60.0.jar -P lib
+          wget https://repo1.maven.org/maven2/com/google/guava/guava/32.1.3-jre/guava-32.1.3-jre.jar -P lib
+
       - name: Compile with javac
         run: javac -d out $(find src -name "*.java")
 
