@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package io.pyserve.inference.v1;
+
+message TorchTensorProto{
+	DataType dtype = 1;
+    repeated int64 tensor_shape = 2;
+    repeated bool bool_val = 3 [packed = true];
+    
+    repeated int32 int8_val = 4 [packed = true];
+    repeated int32 int16_val = 5 [packed = true];
+    repeated int32 int_val = 6 [packed = true];
+    repeated int32 half_val = 7 [packed = true];
+    repeated int64 int64_val = 8 [packed = true];
+    
+    repeated uint32 uint32_val = 9 [packed = true];
+    repeated uint64 uint64_val = 10 [packed = true]; 
+    
+	repeated float float_val = 11 [packed = true];
+	repeated float bfloat16_val = 12 [packed = true];
+	
+    repeated double double_val = 13 [packed = true]; 
+    repeated string string_val = 14;
+      
+    // Raw bytes (fallback/custom mode)
+    bytes tensor_content = 15;
+    string custom_payload = 16;  // for things like serialized JSON or Base64
+}
+
+enum DataType {
+    INVALID = 0;
+    BOOL = 3;
+    
+    INT8 = 4;
+    INT16 = 5;
+    INT32 = 6;
+    HALF = 7;
+    INT64 = 8;
+    
+    UINT32 = 9;
+    UINT64 = 10;
+    
+    QINT8 = 17; // Uses int8_val
+    QUINT8 = 18; // Uses uint32_val (interpreted as uint8)
+    QINT16 = 19;
+    QUINT16 = 20;
+    QINT32 = 21;
+    
+    FLOAT = 11;
+    BFLOAT16 = 12;
+    DOUBLE = 13;
+    STRING_VAL = 14;
+    
+    RAW_BYTES = 15;
+    STRING_PAYLOAD = 16; 
+}
